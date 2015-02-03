@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tessup</RootNamespace>
-    <AssemblyName>MetricHandler</AssemblyName>
+    <AssemblyName>Tessup.MetricHandler</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

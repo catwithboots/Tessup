@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tessup</RootNamespace>
-    <AssemblyName>Client</AssemblyName>
+    <AssemblyName>Tessup.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
