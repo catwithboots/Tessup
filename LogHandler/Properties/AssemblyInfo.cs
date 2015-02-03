@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LogHandler")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tessup LogHandler")]
+[assembly: AssemblyDescription("Tessup Loghandler to write to different log conenctors (logstash, NLOG, Splunk etc.)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Cat with Boots")]
 [assembly: AssemblyProduct("LogHandler")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]

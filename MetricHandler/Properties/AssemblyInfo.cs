@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MetricHandler")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tessup MetricHandler")]
+[assembly: AssemblyDescription("Tessup Metrichandler to send metric data to different types of metric collectors (Influxdb, graphite, OpenTSDB etc.)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Cat with Boots")]
 [assembly: AssemblyProduct("MetricHandler")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]

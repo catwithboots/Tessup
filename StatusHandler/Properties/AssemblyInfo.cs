@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StatusHandler")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Tessup StatusHandler")]
+[assembly: AssemblyDescription("Tessup Statushandler to send status codes to monitoring tools like Sensu or Nagios")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Cat with Boots")]
 [assembly: AssemblyProduct("StatusHandler")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
