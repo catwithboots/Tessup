@@ -36,6 +36,7 @@ namespace Tessup
                 mylist.Add(m);
             }
             mymetric.WriteMetric(mylist);
+            mymetric = null;
         }
     }
 }
