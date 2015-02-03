@@ -32,6 +32,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,11 +67,24 @@
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
             // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "InfluxDb",
+            "Graphite",
+            "LogFile"});
+            this.checkedListBox1.Location = new System.Drawing.Point(930, 218);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(120, 94);
+            this.checkedListBox1.TabIndex = 2;
+            // 
             // ClientForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1523, 507);
+            this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             //this.Name = "ClientForm1";
@@ -86,6 +100,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
     }
 }
 

@@ -20,7 +20,13 @@ namespace Tessup
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MetricHandler mymetric = new MetricHandler();
+            bool useInfluxDb=false, useGraphite=false, useLogFile=false;
+            foreach(object itemChecked in checkedListBox1.CheckedItems){
+                if ((string)itemChecked == "InfluxDb") { useInfluxDb = true; }
+                if ((string)itemChecked == "Graphite") { useGraphite = true; }
+                if ((string)itemChecked == "LogFile") { useLogFile = true; }
+            }
+            MetricHandler mymetric = new MetricHandler(useLogFile,useInfluxDb,useGraphite);
             List<Metric> mylist=new List<Metric>();
             foreach (DataGridViewRow dr in dataGridView1.Rows)
             {
