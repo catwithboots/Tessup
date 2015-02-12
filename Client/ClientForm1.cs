@@ -13,6 +13,8 @@ namespace Tessup
 {
     public partial class ClientForm1 : Form
     {
+        LogHandler mylogger = new LogHandler();
+
         public ClientForm1()
         {
             InitializeComponent();
@@ -27,6 +29,7 @@ namespace Tessup
                 if ((string)itemChecked == "LogFile") { useLogFile = true; }
             }
             MetricHandler mymetric = new MetricHandler(useLogFile,useInfluxDb,useGraphite);
+            
             List<Metric> mylist=new List<Metric>();
             foreach (DataGridViewRow dr in dataGridView1.Rows)
             {
@@ -37,6 +40,12 @@ namespace Tessup
             }
             mymetric.WriteMetric(mylist);
             mymetric = null;
+        }
+
+        private void logButton_Click(object sender, EventArgs e)
+        {
+            mylogger.Info(logTextBox.Text);
+            logTextBox.Text = System.Reflection.MethodBase.GetCurrentMethod().Name;
         }
     }
 }
