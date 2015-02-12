@@ -22,40 +22,45 @@ namespace Tessup
             if (this.config.LogHandler.nlog)
             {
                 this.nLog = LogManager.GetCurrentClassLogger();
-                LogHandlerEvent.logInfoEvent += (l,e) => NLogDo(l,e);
+                LogHandlerEvent.logEvent += (l,e) => NLogDo(l,e);
             }
         }
         public void Info(string line)
         {
             string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
-            LogHandlerEvent.onLogInfo(logLevel,line);
+            LogHandlerEvent.onLog(logLevel,line);
             
         }
 
         public void Warning(string line)
         {
-            throw new NotImplementedException();
+            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            LogHandlerEvent.onLog(logLevel, line);
         }
 
         public void Error(string line)
         {
-            throw new NotImplementedException();
+            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            LogHandlerEvent.onLog(logLevel, line);
         }
 
         public void Verbose(string line)
         {
-            throw new NotImplementedException();
+            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            LogHandlerEvent.onLog(logLevel, line);
         }
 
         public void Debug(string line)
         {
-            throw new NotImplementedException();
+            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            LogHandlerEvent.onLog(logLevel, line);
         }
 
 
         public void Fatal(string line)
         {
-            throw new NotImplementedException();
+            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            LogHandlerEvent.onLog(logLevel, line);
         }
 
         private Config GetConfig()
@@ -78,15 +83,15 @@ namespace Tessup
 
     class LogHandlerEvent
     {
-        public delegate void LogInfoEvent(string logLevel,string line);
+        public delegate void LogEvent(string logLevel,string line);
         //Defining event based on the above delegate
-        public static event LogInfoEvent logInfoEvent;
+        public static event LogEvent logEvent;
 
-        public static void onLogInfo(string l,string s)
+        public static void onLog(string l,string s)
         {
-            if (logInfoEvent != null)
+            if (logEvent != null)
             {
-                logInfoEvent(l,s);
+                logEvent(l,s);
             }
         }
     }
