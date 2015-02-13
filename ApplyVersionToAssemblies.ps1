@@ -37,7 +37,7 @@ switch($VersionData.Count)
 $NewVersion = $VersionData[0]
 Write-Host "Version: $NewVersion"
 
-$files = gci C:\Jenkins\workspace\RefreshDB -recurse -include "*Properties*","My Project" | 
+$files = gci C:\Jenkins\workspace\Tessup -recurse -include "*Properties*","My Project" | 
 	?{ $_.PSIsContainer } | 
 	foreach { gci -Path $_.FullName -Recurse -include AssemblyInfo.* }
 if($files)
