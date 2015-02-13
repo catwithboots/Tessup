@@ -10,27 +10,27 @@ Write-Host ("Script has now started")
 Write-Host ("This should give the correct directory: " + $Env:WORKSPACE)
 
 # Make sure there is a build number
-if (-not $Env:GTA_VERSION)
+if (-not $Env:TESSUP_VERSION)
 {
-	Write-Error ("GTA_VERSION environment variable is missing.")
+	Write-Error ("TESSUP_VERSION environment variable is missing.")
 	exit 1
 }
-Write-Host "GTA_VERSION: $Env:GTA_VERSION"
-Write-Verbose "GTA_VERSION: $Env:GTA_VERSION"
+Write-Host "TESSUP_VERSION: $Env:TESSUP_VERSION"
+Write-Verbose "TESSUP_VERSION: $Env:TESSUP_VERSION"
 	
 # Get and validate the version data
-$VersionData = [regex]::matches($Env:GTA_VERSION,$VersionRegex)
+$VersionData = [regex]::matches($Env:TESSUP_VERSION,$VersionRegex)
 switch($VersionData.Count)
 {
    0		
       { 
-         Write-Error "Could not find version number data in GTA_VERSION."
+         Write-Error "Could not find version number data in TESSUP_VERSION."
          exit 1
       }
    1 {}
    default 
       { 
-         Write-Warning "Found more than instance of version data in GTA_VERSION." 
+         Write-Warning "Found more than instance of version data in TESSUP_VERSION." 
          Write-Warning "Will assume first instance is version."
       }
 }
