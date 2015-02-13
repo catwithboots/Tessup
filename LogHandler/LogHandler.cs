@@ -8,14 +8,20 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
+using Tessup.Shared;
 
 namespace Tessup
 {
     public class LogHandler : ILogHandler
     {
+        // Public Properties
         public string logMethod { get; set; }
         public Config config { get; set; }
+
+        // Private properties
         Logger nLog;
+
+        // Constructor implementation
         public LogHandler()
         {
             this.config = GetConfig();
@@ -25,22 +31,22 @@ namespace Tessup
                 LogHandlerEvent.logEvent += (l,e) => NLogDo(l,e);
             }
         }
+        // Method Implementation of interface
         public void Info(string line)
         {
             string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
             LogHandlerEvent.onLog(logLevel,line);
-            
         }
 
         public void Warning(string line)
         {
-            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            string logLevel = "Warn";
             LogHandlerEvent.onLog(logLevel, line);
         }
 
         public void Error(string line)
         {
-            string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            string logLevel = "Error";
             LogHandlerEvent.onLog(logLevel, line);
         }
 
@@ -56,13 +62,13 @@ namespace Tessup
             LogHandlerEvent.onLog(logLevel, line);
         }
 
-
         public void Fatal(string line)
         {
             string logLevel = System.Reflection.MethodBase.GetCurrentMethod().Name;
             LogHandlerEvent.onLog(logLevel, line);
         }
 
+        // Internal methods
         private Config GetConfig()
         {
             string xml = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Tessup.config");

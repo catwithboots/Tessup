@@ -52,9 +52,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Config\Config.csproj">
+    <ProjectReference Include="..\Shared\Shared.csproj">
       <Project>{ad465c0c-d880-4a2b-87ab-7bcefb1e0bed}</Project>
-      <Name>Config</Name>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
