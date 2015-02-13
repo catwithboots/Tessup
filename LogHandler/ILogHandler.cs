@@ -8,6 +8,7 @@ namespace Tessup
 {
     interface ILogHandler
     {
+        void Trace(string line);
         void Info(string line);
         void Warning(string line);
         void Error(string line);

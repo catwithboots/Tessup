@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,11 +14,13 @@ namespace Tessup
 {
     public partial class ClientForm1 : Form
     {
-        LogHandler mylogger = new LogHandler();
+        LogHandler myLogger = new LogHandler();
+        string logLevel = "Info";
 
         public ClientForm1()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,8 +47,24 @@ namespace Tessup
 
         private void logButton_Click(object sender, EventArgs e)
         {
-            mylogger.Info(logTextBox.Text);
-            logTextBox.Text = System.Reflection.MethodBase.GetCurrentMethod().Name;
+            string level=logLevelGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Text;
+            try
+            {
+                MethodInfo method = myLogger.GetType().GetMethod(level, new Type[] { typeof(string) });
+                method.Invoke(myLogger, new Object[] { logTextBox.Text });
+            }
+            catch (Exception ex)
+            {
+                myLogger.Error(string.Format("Unable to log message \"{0}\" with level \"{1}\"; {2}",logTextBox.Text,level,ex.Message));
+            }
+            //myLogger.Info(logTextBox.Text);
+            //logTextBox.Text = System.Reflection.MethodBase.GetCurrentMethod().Name;
+        }
+
+        private void logLevel_Changed(object sender, EventArgs e)
+        {
+            var checkedButton = logLevelGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+            logLevel = checkedButton.Text;
         }
     }
 }
