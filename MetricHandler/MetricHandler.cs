@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Graphite;
+using LibInfluxDB;
 
 namespace Tessup
 {   
@@ -91,6 +93,10 @@ namespace Tessup
             }
             sw.Close();
             fs.Close();
+
+            LibInfluxDB.Net.InfluxDb connect = new LibInfluxDB.Net.InfluxDb("influxdb.jollyrogers.nl", "tessup", "tessup");
+            LibInfluxDB.Net.Models.Serie payload = new LibInfluxDB.Net.Models.Serie.Builder
+
         }
         void WriteGraphite(List<Metric> metricList)
         {
