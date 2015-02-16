@@ -30,8 +30,6 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.MetricName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.logButton = new System.Windows.Forms.Button();
@@ -49,6 +47,10 @@
             this.statusTabPage = new System.Windows.Forms.TabPage();
             this.sharedTabPage = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.targetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.logLevelGroupBox.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -70,22 +72,14 @@
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.MetricName,
+            this.targetName,
+            this.objectName,
+            this.valueName,
             this.Value});
             this.dataGridView1.Location = new System.Drawing.Point(6, 35);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(569, 150);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // MetricName
-            // 
-            this.MetricName.HeaderText = "Name";
-            this.MetricName.Name = "MetricName";
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
             // 
             // checkedListBox1
             // 
@@ -94,7 +88,7 @@
             "InfluxDb",
             "Graphite",
             "LogFile"});
-            this.checkedListBox1.Location = new System.Drawing.Point(252, 91);
+            this.checkedListBox1.Location = new System.Drawing.Point(878, 35);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(120, 94);
             this.checkedListBox1.TabIndex = 2;
@@ -277,6 +271,26 @@
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // targetName
+            // 
+            this.targetName.HeaderText = "targetName";
+            this.targetName.Name = "targetName";
+            // 
+            // objectName
+            // 
+            this.objectName.HeaderText = "objectName";
+            this.objectName.Name = "objectName";
+            // 
+            // valueName
+            // 
+            this.valueName.HeaderText = "valueName";
+            this.valueName.Name = "valueName";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "value";
+            this.Value.Name = "Value";
+            // 
             // ClientForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -313,14 +327,16 @@
         private System.Windows.Forms.RadioButton fatalRadioButton;
         private System.Windows.Forms.RadioButton verboseRadioButton;
         private System.Windows.Forms.GroupBox logLevelGroupBox;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MetricName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.TabPage logTabPage;
         private System.Windows.Forms.TabPage metricsTabPage;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TabPage statusTabPage;
         private System.Windows.Forms.TabPage sharedTabPage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn targetName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn objectName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn valueName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
     }
 }
 

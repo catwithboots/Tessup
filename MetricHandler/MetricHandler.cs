@@ -11,8 +11,17 @@ namespace Tessup
 {   
     public class Metric
     {
-        public string Name { get; set; }
-        public object Value { get; set; }
+        public string targetName { get; set; }
+        public string objectName { get; set; }
+        public string valueName { get; set; }
+        public object value { get; set; }
+        public Metric(string targetName, string objectName, string valueName, object value)
+        {
+            this.objectName = objectName;
+            this.targetName = targetName;
+            this.valueName = valueName;
+            this.value = value;
+        }
     }
 
     class MetricHandlerEvent
@@ -70,46 +79,42 @@ namespace Tessup
         //Implementations of different writers
         void WriteLog(List<Metric> metricList)
         {
-            FileStream fs = new FileStream("c:\\logfiles\\poep.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine("Handler Name: {0}", "WriteLog");
+            //kan efficienter door alles naar dezelfde target te sortere/groeperen
             foreach (Metric m in metricList)
             {
-                sw.WriteLine("Metric Name: {0}", m.Name);
-                sw.WriteLine("Metric Value: {0}", m.Value);
+                FileStream fs = new FileStream("c:\\logfiles\\" + m.targetName+ ".txt", FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine("Object Name: {0}, Metric Name: {1}, Metric Value: {2}", m.objectName, m.valueName, m.value.ToString());
+                sw.Close();
+                fs.Close();
             }
-            sw.Close();
-            fs.Close();
         }
+        //void WriteInfluxDb(List<Metric> metricList)
         void WriteInfluxDb(List<Metric> metricList)
         {
-            FileStream fs = new FileStream("c:\\logfiles\\poep.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine("Handler Name: {0}", "WriteInfluxDb");
+            // convert metriclist to lists(s) that is optimal for influxdb
+            //foreach influxdbmetric do sent it to influxdb
+
+
+            LibInfluxDB.Net.InfluxDb connect = new LibInfluxDB.Net.InfluxDb("http://influxdb-tessup-1.kmeinster.cont.tutum.io:8086", "tessup", "tessup");
             foreach (Metric m in metricList)
             {
-                sw.WriteLine("Metric Name: {0}", m.Name);
-                sw.WriteLine("Metric Value: {0}", m.Value);
+                LibInfluxDB.Net.Models.Serie payload = new LibInfluxDB.Net.Models.Serie.Builder(m.objectName).Columns(m.valueName).Values(m.value).Build();
+                Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
             }
-            sw.Close();
-            fs.Close();
-
-            LibInfluxDB.Net.InfluxDb connect = new LibInfluxDB.Net.InfluxDb("influxdb.jollyrogers.nl", "tessup", "tessup");
-            LibInfluxDB.Net.Models.Serie payload = new LibInfluxDB.Net.Models.Serie.Builder
+            
 
         }
         void WriteGraphite(List<Metric> metricList)
         {
-            FileStream fs = new FileStream("c:\\logfiles\\poep.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.WriteLine("Handler Name: {0}", "WriteGraphite");
             foreach (Metric m in metricList)
             {
-                sw.WriteLine("Metric Name: {0}", m.Name);
-                sw.WriteLine("Metric Value: {0}", m.Value);
+                FileStream fs = new FileStream("c:\\logfiles\\" + m.targetName + "_graphite.txt", FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.WriteLine("Object Name: {1}, Metric Name: {2}, Metric Value: {3}", m.objectName, m.valueName, m.value.ToString());
+                sw.Close();
+                fs.Close();
             }
-            sw.Close();
-            fs.Close();
         }
 
     }

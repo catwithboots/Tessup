@@ -69,19 +69,19 @@ namespace Tessup.Shared
     public partial class ConfigMetrichandler
     {
 
-        private bool nrpeField;
+        private bool influxdbField;
 
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool nrpe
+        public bool influxdb
         {
             get
             {
-                return this.nrpeField;
+                return this.influxdbField;
             }
             set
             {
-                this.nrpeField = value;
+                this.influxdbField = value;
             }
         }
     }

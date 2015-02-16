@@ -36,10 +36,10 @@ namespace Tessup
             List<Metric> mylist=new List<Metric>();
             foreach (DataGridViewRow dr in dataGridView1.Rows)
             {
-                Metric m = new Metric();
-                m.Name = (string)dr.Cells["Name"].Value;
-                m.Value = dr.Cells["Value"].Value;
-                mylist.Add(m);
+                if (dr.Cells["targetName"].Value != null)
+                {
+                    mylist.Add(new Metric((string)dr.Cells["targetName"].Value, (string)dr.Cells["objectName"].Value, (string)dr.Cells["valueName"].Value, (object)dr.Cells["Value"].Value));
+                }
             }
             mymetric.WriteMetric(mylist);
             mymetric = null;
