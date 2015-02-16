@@ -43,6 +43,7 @@ namespace Tessup
             }
             mymetric.WriteMetric(mylist);
             mymetric = null;
+            
         }
 
         private void logButton_Click(object sender, EventArgs e)
