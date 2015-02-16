@@ -25,28 +25,46 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		ApplyVersionToAssemblies.ps1 = ApplyVersionToAssemblies.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{194826AA-8732-4ABC-99F2-D3ECE8804850}"
+	ProjectSection(SolutionItems) = preProject
+		Build.proj = Build.proj
+		.build\MSBuild.Community.Tasks.dll = .build\MSBuild.Community.Tasks.dll
+		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Automated_Build|Any CPU = Automated_Build|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Automated_Build|Any CPU.ActiveCfg = Release|Any CPU
+		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Automated_Build|Any CPU.Build.0 = Release|Any CPU
 		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CFE4A92-E735-46C9-96C7-547D77111DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Automated_Build|Any CPU.ActiveCfg = Automated_Build|Any CPU
+		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Automated_Build|Any CPU.Build.0 = Automated_Build|Any CPU
 		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0861093-4893-44DE-877C-CDCDC75D1EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Automated_Build|Any CPU.ActiveCfg = Automated_Build|Any CPU
+		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Automated_Build|Any CPU.Build.0 = Automated_Build|Any CPU
 		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E6AEE84-2AA9-41D2-8AAE-5E98C16CA957}.Release|Any CPU.Build.0 = Release|Any CPU
+		{422BB703-FB42-482A-B343-9CFF531289E4}.Automated_Build|Any CPU.ActiveCfg = Automated_Build|Any CPU
+		{422BB703-FB42-482A-B343-9CFF531289E4}.Automated_Build|Any CPU.Build.0 = Automated_Build|Any CPU
 		{422BB703-FB42-482A-B343-9CFF531289E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{422BB703-FB42-482A-B343-9CFF531289E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{422BB703-FB42-482A-B343-9CFF531289E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{422BB703-FB42-482A-B343-9CFF531289E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD465C0C-D880-4A2B-87AB-7BCEFB1E0BED}.Automated_Build|Any CPU.ActiveCfg = Automated_Build|Any CPU
+		{AD465C0C-D880-4A2B-87AB-7BCEFB1E0BED}.Automated_Build|Any CPU.Build.0 = Automated_Build|Any CPU
 		{AD465C0C-D880-4A2B-87AB-7BCEFB1E0BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD465C0C-D880-4A2B-87AB-7BCEFB1E0BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD465C0C-D880-4A2B-87AB-7BCEFB1E0BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
