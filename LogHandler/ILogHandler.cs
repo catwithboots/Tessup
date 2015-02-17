@@ -14,6 +14,7 @@ namespace Tessup
         void Error(string line);
         void Verbose(string line);
         void Debug(string line);
+        void Debug(string line,Tessup.LogHandler.StackInfo si);
         void Fatal(string line);
     }
 }

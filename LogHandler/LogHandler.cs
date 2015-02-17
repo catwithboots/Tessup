@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
 using Tessup.Shared;
+using System.Diagnostics;
 
 namespace Tessup
 {
@@ -17,6 +18,12 @@ namespace Tessup
         // Public Properties
         public string logMethod { get; set; }
         public Config config { get; set; }
+        public enum StackInfo
+        {
+            None,
+            CurrentMethod,
+            Full
+        }
 
         // Private properties
         Logger nLog;
@@ -47,31 +54,55 @@ namespace Tessup
         }
         public void Info(string line)
         {
+            line = new StackFrame(1).GetMethod().Name + " | " + line;
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Warning(string line)
         {
+            line = new StackFrame(1).GetMethod().Name + "\t|\t" + line;
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Error(string line)
         {
+            line = new StackFrame(1).GetMethod().Name + "\t|\t" + line;
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Verbose(string line)
         {
+            line = new StackFrame(1).GetMethod().Name + " | " + line;
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Debug(string line)
         {
+            //line = new StackFrame(1).GetMethod().Name + "\t|\t" + line;
+            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+        }
+        public void Debug(string line,StackInfo si)
+        {
+            switch (si)
+            {
+                case StackInfo.CurrentMethod:
+                    line = new StackFrame(1).GetMethod().Name + " | " + line;
+                    break;
+                case StackInfo.Full:
+                    StackTrace st = new StackTrace();
+                    StackFrame[] sfs= st.GetFrames();
+                    line = Environment.StackTrace + " | " + line;
+                    break;
+                case StackInfo.None:
+                    break;
+            }
+                
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Fatal(string line)
         {
+            line = new StackFrame(1).GetMethod().Name + "\t|\t" + line;
             LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
         }
 

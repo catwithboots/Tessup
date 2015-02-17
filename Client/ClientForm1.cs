@@ -58,8 +58,6 @@ namespace Tessup
             {
                 myLogger.Error(string.Format("Unable to log message \"{0}\" with level \"{1}\"; {2}",logTextBox.Text,level,ex.Message));
             }
-            //myLogger.Info(logTextBox.Text);
-            //logTextBox.Text = System.Reflection.MethodBase.GetCurrentMethod().Name;
         }
 
         private void logLevel_Changed(object sender, EventArgs e)
