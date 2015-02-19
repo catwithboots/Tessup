@@ -1,86 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NLog;
-using System.Xml;
-using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
-using Tessup.Shared;
+using System.Xml.Serialization;
+using NLog;
 
 namespace Tessup
 {
     public class LogHandler : ILogHandler
     {
         // Public Properties
-        public string logMethod { get; set; }
-        public Config config { get; set; }
+        public string LogMethod { get; set; }
+        public Config.Config Config { get; set; }
 
         // Private properties
-        Logger nLog;
-        Dictionary<string, MethodInfo> nLogLevels = new Dictionary<string, MethodInfo>();	    
+        readonly Logger _nLog;
+        readonly Dictionary<string, MethodInfo> _nLogLevels = new Dictionary<string, MethodInfo>();	    
 
         // Constructor implementation
         public LogHandler()
         {
-            this.config = GetConfig();
+            Config = GetConfig();
             // Set nlog specifics if enabled
-            if (this.config.LogHandler.nlog)
-            {
-                this.nLog = LogManager.GetCurrentClassLogger();
-                nLogLevels.Add("Trace", this.nLog.GetType().GetMethod("Trace", new Type[] { typeof(string) }));
-                nLogLevels.Add("Debug", this.nLog.GetType().GetMethod("Debug", new Type[] { typeof(string) }));
-                nLogLevels.Add("Info", this.nLog.GetType().GetMethod("Info", new Type[] { typeof(string) }));
-                nLogLevels.Add("Warning", this.nLog.GetType().GetMethod("Warn", new Type[] { typeof(string) }));
-                nLogLevels.Add("Error", this.nLog.GetType().GetMethod("Error", new Type[] { typeof(string) }));
-                nLogLevels.Add("Verbose", this.nLog.GetType().GetMethod("Debug", new Type[] { typeof(string) }));
-                nLogLevels.Add("Fatal", this.nLog.GetType().GetMethod("Fatal", new Type[] { typeof(string) }));
-                LogHandlerEvent.logEvent += (l,e) => NLogDo(l,e);                   
-            }
+            if (!Config.LogHandler.Nlog) return;
+            _nLog = LogManager.GetCurrentClassLogger();
+            _nLogLevels.Add("Trace", _nLog.GetType().GetMethod("Trace", new[] { typeof(string) }));
+            _nLogLevels.Add("Debug", _nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            _nLogLevels.Add("Info", _nLog.GetType().GetMethod("Info", new[] { typeof(string) }));
+            _nLogLevels.Add("Warning", _nLog.GetType().GetMethod("Warn", new[] { typeof(string) }));
+            _nLogLevels.Add("Error", _nLog.GetType().GetMethod("Error", new[] { typeof(string) }));
+            _nLogLevels.Add("Verbose", _nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            _nLogLevels.Add("Fatal", _nLog.GetType().GetMethod("Fatal", new[] { typeof(string) }));
+            LogHandlerEvent.logEvent += (l,e) => NLogDo(l,e);
         }
         // Method Implementation of interface
         public void Trace(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
         public void Info(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Warning(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Error(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Verbose(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Debug(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         public void Fatal(string line)
         {
-            LogHandlerEvent.onLog(System.Reflection.MethodBase.GetCurrentMethod().Name, line);
+            LogHandlerEvent.OnLog(MethodBase.GetCurrentMethod().Name, line);
         }
 
         // Internal methods
-        private Config GetConfig()
+        private Config.Config GetConfig()
         {
             string xml = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Tessup.config");
-            XmlSerializer serializer = new XmlSerializer(typeof(Config));
-            Config ei = (Config)serializer.Deserialize(new StringReader(xml));
+            XmlSerializer serializer = new XmlSerializer(typeof(Config.Config));
+            Config.Config ei = (Config.Config)serializer.Deserialize(new StringReader(xml));
             return ei;
         }
 
@@ -88,9 +81,9 @@ namespace Tessup
         void NLogDo(string l,string s)
         {
             MethodInfo method;
-            if (nLogLevels.TryGetValue(l, out method))
+            if (_nLogLevels.TryGetValue(l, out method))
             {
-                method.Invoke(nLog, new Object[] { s });
+                method.Invoke(_nLog, new Object[] { s });
             }
         }
     }
@@ -101,7 +94,7 @@ namespace Tessup
         //Defining event based on the above delegate
         public static event LogEvent logEvent;
 
-        public static void onLog(string l,string s)
+        public static void OnLog(string l,string s)
         {
             if (logEvent != null)
             {

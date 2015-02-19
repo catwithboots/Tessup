@@ -1,11 +1,14 @@
-﻿namespace Tessup
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Tessup
 {
     partial class ClientForm1
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -50,6 +53,8 @@
             this.targetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.objectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.valueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.logLevelGroupBox.SuspendLayout();
@@ -75,11 +80,14 @@
             this.targetName,
             this.objectName,
             this.valueName,
+            this.valueName2,
+            this.valueName3,
             this.Value});
-            this.dataGridView1.Location = new System.Drawing.Point(6, 35);
+            this.dataGridView1.Location = new System.Drawing.Point(8, 35);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(569, 150);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // checkedListBox1
             // 
@@ -286,6 +294,16 @@
             this.valueName.HeaderText = "valueName";
             this.valueName.Name = "valueName";
             // 
+            // valueName2
+            // 
+            this.valueName2.HeaderText = "valueName2";
+            this.valueName2.Name = "valueName2";
+            // 
+            // valueName3
+            // 
+            this.valueName3.HeaderText = "valueName3";
+            this.valueName3.Name = "valueName3";
+            // 
             // Value
             // 
             this.Value.HeaderText = "value";
@@ -314,29 +332,31 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.TextBox logTextBox;
-        private System.Windows.Forms.Button logButton;
-        private System.Windows.Forms.RadioButton traceRadioButton;
-        private System.Windows.Forms.RadioButton debugRadioButton;
-        private System.Windows.Forms.RadioButton infoRadioButton;
-        private System.Windows.Forms.RadioButton warningRadioButton;
-        private System.Windows.Forms.RadioButton errorRadioButton;
-        private System.Windows.Forms.RadioButton fatalRadioButton;
-        private System.Windows.Forms.RadioButton verboseRadioButton;
-        private System.Windows.Forms.GroupBox logLevelGroupBox;
-        private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage logTabPage;
-        private System.Windows.Forms.TabPage metricsTabPage;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TabPage statusTabPage;
-        private System.Windows.Forms.TabPage sharedTabPage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn targetName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn objectName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn valueName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private Button button1;
+        private DataGridView dataGridView1;
+        private CheckedListBox checkedListBox1;
+        private TextBox logTextBox;
+        private Button logButton;
+        private RadioButton traceRadioButton;
+        private RadioButton debugRadioButton;
+        private RadioButton infoRadioButton;
+        private RadioButton warningRadioButton;
+        private RadioButton errorRadioButton;
+        private RadioButton fatalRadioButton;
+        private RadioButton verboseRadioButton;
+        private GroupBox logLevelGroupBox;
+        private TabControl mainTabControl;
+        private TabPage logTabPage;
+        private TabPage metricsTabPage;
+        private StatusStrip statusStrip1;
+        private TabPage statusTabPage;
+        private TabPage sharedTabPage;
+        private DataGridViewTextBoxColumn targetName;
+        private DataGridViewTextBoxColumn objectName;
+        private DataGridViewTextBoxColumn valueName;
+        private DataGridViewTextBoxColumn valueName2;
+        private DataGridViewTextBoxColumn valueName3;
+        private DataGridViewTextBoxColumn Value;
     }
 }
 

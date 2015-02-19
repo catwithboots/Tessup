@@ -1,89 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Xml.Serialization;
 
-namespace Tessup.Shared
+namespace Config
 {
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class Config
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false)]
+    public class Config
     {
-
-        private ConfigLogHandler logHandlerField;
-
-        private ConfigMetrichandler metrichandlerField;
+        /// <remarks/>
+        public ConfigLogHandler LogHandler { get; set; }
 
         /// <remarks/>
-        public ConfigLogHandler LogHandler
-        {
-            get
-            {
-                return this.logHandlerField;
-            }
-            set
-            {
-                this.logHandlerField = value;
-            }
-        }
-
-        /// <remarks/>
-        public ConfigMetrichandler metrichandler
-        {
-            get
-            {
-                return this.metrichandlerField;
-            }
-            set
-            {
-                this.metrichandlerField = value;
-            }
-        }
+        public ConfigMetrichandler Metrichandler { get; set; }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class ConfigLogHandler
+    [XmlType(AnonymousType = true)]
+    public class ConfigLogHandler
     {
-
-        private bool nlogField;
-
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool nlog
-        {
-            get
-            {
-                return this.nlogField;
-            }
-            set
-            {
-                this.nlogField = value;
-            }
-        }
+        [XmlAttribute]
+        public bool Nlog { get; set; }
     }
 
     /// <remarks/>
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class ConfigMetrichandler
+    [XmlType(AnonymousType = true)]
+    public class ConfigMetrichandler
     {
-
-        private bool influxdbField;
-
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public bool influxdb
-        {
-            get
-            {
-                return this.influxdbField;
-            }
-            set
-            {
-                this.influxdbField = value;
-            }
-        }
+        [XmlAttribute]
+        public bool Influxdb { get; set; }
     }
 
 

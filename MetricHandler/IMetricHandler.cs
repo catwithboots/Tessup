@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Tessup
 {
     interface IMetricHandler
     {
-        void WriteMetric(List<Metric> metricList);
+        Task<string> WriteMetric(List<Metric> metricList);
     }
 }
