@@ -5,6 +5,6 @@ namespace Tessup
 {
     interface IMetricHandler
     {
-        Task<string> WriteMetric(List<Metric> metricList);
+        Task WriteMetric(List<Metric> metricList);
     }
 }
