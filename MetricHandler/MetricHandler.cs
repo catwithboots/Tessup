@@ -55,6 +55,7 @@ namespace Tessup
                 sw.WriteLine("Object Name: {0}, Metric Name: {1}, Metric Value: {2}", m.ObjectName, m.ValueName, m.Values);
                 sw.Close();
                 fs.Close();
+                MetricHandlerEvent.MetricEvent -= WriteLog;
                 return;
             }
         }
@@ -71,6 +72,7 @@ namespace Tessup
                 var payload = new Serie.Builder(m.ObjectName).Columns(m.ValueName).Values(m.Values).Build();
                 //Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
                 var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                MetricHandlerEvent.MetricEvent -= WriteInfluxDb;
                 return;
                 //Task<InfluxDbApiResponse> pushMetric = connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
 
@@ -89,6 +91,7 @@ namespace Tessup
                     sw.WriteLine("Object Name: {1}, Metric Name: {2}, Metric Value: {3}", m.ObjectName, m.ValueName, m.Values);
                 sw.Close();
                 fs.Close();
+                MetricHandlerEvent.MetricEvent -= WriteGraphite;
                 return;
             }
         }

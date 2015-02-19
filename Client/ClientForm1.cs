@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 //using Tessup;
@@ -31,16 +30,17 @@ namespace Tessup
             
             var mylist= (from DataGridViewRow dr in dataGridView1.Rows where dr.Cells["targetName"].Value != null select new Metric((string) dr.Cells["targetName"].Value, (string) dr.Cells["objectName"].Value, (string) dr.Cells["valueName"].Value, dr.Cells["Value"].Value)).ToList();
             mymetric.WriteMetric(mylist);
-            mymetric = null;
-            
+            mymetric = null;    
         }
 
         private void logButton_Click(object sender, EventArgs e)
         {
-            var level=logLevelGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Text;
+            var firstOrDefault = logLevelGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+            if (firstOrDefault == null) return;
+            var level=firstOrDefault.Text;
             try
             {
-                MethodInfo method = _myLogger.GetType().GetMethod(level, new[] { typeof(string) });
+                var method = _myLogger.GetType().GetMethod(level, new[] { typeof(string) });
                 method.Invoke(_myLogger, new Object[] { logTextBox.Text });
             }
             catch (Exception ex)
@@ -58,7 +58,6 @@ namespace Tessup
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
     }
 }

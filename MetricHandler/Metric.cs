@@ -9,9 +9,9 @@ namespace Tessup
         public Metric(string targetName, string objectName, string pointNames, object values)
         {
             TargetName = targetName;
-            ObjectName = objectName;
-            ValueName = pointNames;
-            Values = values;
+            ObjectName = objectName.ToLower();
+            ValueName = pointNames.ToLower();
+            Values = values.ToString().ToLower();
         }
     }
 }
