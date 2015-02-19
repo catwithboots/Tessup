@@ -12,6 +12,6 @@ namespace Config
         public ConfigLogHandler LogHandler { get; set; }
 
         /// <remarks/>
-        public ConfigMetrichandler Metrichandler { get; set; }
+        public ConfigMetrichandler MetricHandler { get; set; }
     }
 }

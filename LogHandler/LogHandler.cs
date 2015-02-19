@@ -32,17 +32,17 @@ namespace Tessup
         // Constructor implementation
         public LogHandler()
         {
-            this.Config = GetConfig();
+            var configuration = GetConfig();
             // Set nlog specifics if enabled
-            if (!Config.LogHandler.Nlog) return;
-            this.nLog = LogManager.GetCurrentClassLogger();
-            nLogLevels.Add("Trace", this.nLog.GetType().GetMethod("Trace", new Type[] { typeof(string) }));
-            nLogLevels.Add("Debug", this.nLog.GetType().GetMethod("Debug", new Type[] { typeof(string) }));
-            nLogLevels.Add("Info", this.nLog.GetType().GetMethod("Info", new Type[] { typeof(string) }));
-            nLogLevels.Add("Warning", this.nLog.GetType().GetMethod("Warn", new Type[] { typeof(string) }));
-            nLogLevels.Add("Error", this.nLog.GetType().GetMethod("Error", new Type[] { typeof(string) }));
-            nLogLevels.Add("Verbose", this.nLog.GetType().GetMethod("Debug", new Type[] { typeof(string) }));
-            nLogLevels.Add("Fatal", this.nLog.GetType().GetMethod("Fatal", new Type[] { typeof(string) }));
+            if (!configuration.LogHandler.Nlog) return;
+            nLog = LogManager.GetCurrentClassLogger();
+            nLogLevels.Add("Trace", nLog.GetType().GetMethod("Trace", new[] { typeof(string) }));
+            nLogLevels.Add("Debug", nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            nLogLevels.Add("Info", nLog.GetType().GetMethod("Info", new[] { typeof(string) }));
+            nLogLevels.Add("Warning", nLog.GetType().GetMethod("Warn", new[] { typeof(string) }));
+            nLogLevels.Add("Error", nLog.GetType().GetMethod("Error", new[] { typeof(string) }));
+            nLogLevels.Add("Verbose", nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            nLogLevels.Add("Fatal", nLog.GetType().GetMethod("Fatal", new[] { typeof(string) }));
             LogHandlerEvent.logEvent += (l, e) => NLogDo(l, e);
         }
         // Method Implementation of interface
@@ -107,9 +107,9 @@ namespace Tessup
         // Internal methods
         private static Configure GetConfig()
         {
-            string xml = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Tessup.config");
-            XmlSerializer serializer = new XmlSerializer(typeof(Configure));
-            Configure ei = (Configure)serializer.Deserialize(new StringReader(xml));
+            var xml = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Tessup.config");
+            var serializer = new XmlSerializer(typeof(Configure));
+            var ei = (Configure)serializer.Deserialize(new StringReader(xml));
             return ei;
         }
 
