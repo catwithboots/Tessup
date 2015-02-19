@@ -6,38 +6,7 @@ using LibInfluxDB.Net;
 using LibInfluxDB.Net.Models;
 
 namespace Tessup
-{   
-    public class Metric
-    {
-        public string TargetName { get; set; }
-        public string ObjectName { get; set; }
-        public string ValueName { get; set; }
-        public object Values { get; set; }
-        public Metric(string targetName, string objectName, string pointNames, object values)
-        {
-            TargetName = targetName;
-            ObjectName = objectName;
-            ValueName = pointNames;
-            Values = values;
-        }
-    }
-
-    class MetricHandlerEvent
-    {
-        //public delegate void WriteMetricEvent(List<Metric> metricList);
-        public delegate Task WriteMetricEvent(List<Metric> metricList);
-        //Defining event based on the above delegate
-        public static event WriteMetricEvent MetricEvent;
-
-        public static void OnWriteMetric(List<Metric> s)
-        {
-            if (MetricEvent != null)
-            {
-                MetricEvent(s);
-            }
-        }
-    }
-
+{
     public class MetricHandler //: IMetricHandler
     {
         public bool UseLog { get; set; }

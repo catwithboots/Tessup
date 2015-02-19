@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMetricHandler.cs" />
+    <Compile Include="Metric.cs" />
     <Compile Include="MetricHandler.cs" />
+    <Compile Include="MetricHandlerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
