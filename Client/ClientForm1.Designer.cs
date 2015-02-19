@@ -33,6 +33,12 @@ namespace Tessup
         {
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.targetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.objectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.valueName3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.logTextBox = new System.Windows.Forms.TextBox();
             this.logButton = new System.Windows.Forms.Button();
@@ -50,12 +56,6 @@ namespace Tessup
             this.statusTabPage = new System.Windows.Forms.TabPage();
             this.sharedTabPage = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.targetName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.objectName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.valueName3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.logLevelGroupBox.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -89,8 +89,39 @@ namespace Tessup
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // targetName
+            // 
+            this.targetName.HeaderText = "targetName";
+            this.targetName.Name = "targetName";
+            // 
+            // objectName
+            // 
+            this.objectName.HeaderText = "objectName";
+            this.objectName.Name = "objectName";
+            // 
+            // valueName
+            // 
+            this.valueName.HeaderText = "valueName";
+            this.valueName.Name = "valueName";
+            // 
+            // valueName2
+            // 
+            this.valueName2.HeaderText = "valueName2";
+            this.valueName2.Name = "valueName2";
+            // 
+            // valueName3
+            // 
+            this.valueName3.HeaderText = "valueName3";
+            this.valueName3.Name = "valueName3";
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "value";
+            this.Value.Name = "Value";
+            // 
             // checkedListBox1
             // 
+            this.checkedListBox1.CheckOnClick = true;
             this.checkedListBox1.FormattingEnabled = true;
             this.checkedListBox1.Items.AddRange(new object[] {
             "InfluxDb",
@@ -278,36 +309,6 @@ namespace Tessup
             this.statusStrip1.Size = new System.Drawing.Size(1014, 22);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // targetName
-            // 
-            this.targetName.HeaderText = "targetName";
-            this.targetName.Name = "targetName";
-            // 
-            // objectName
-            // 
-            this.objectName.HeaderText = "objectName";
-            this.objectName.Name = "objectName";
-            // 
-            // valueName
-            // 
-            this.valueName.HeaderText = "valueName";
-            this.valueName.Name = "valueName";
-            // 
-            // valueName2
-            // 
-            this.valueName2.HeaderText = "valueName2";
-            this.valueName2.Name = "valueName2";
-            // 
-            // valueName3
-            // 
-            this.valueName3.HeaderText = "valueName3";
-            this.valueName3.Name = "valueName3";
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "value";
-            this.Value.Name = "Value";
             // 
             // ClientForm1
             // 
