@@ -32,6 +32,7 @@ namespace Tessup
             var mylist= (from DataGridViewRow dr in dataGridView1.Rows where dr.Cells["targetName"].Value != null select new Metric((string) dr.Cells["targetName"].Value, (string) dr.Cells["objectName"].Value, (string) dr.Cells["valueName"].Value, dr.Cells["Value"].Value)).ToList();
             mymetric.WriteMetric(mylist);
             mymetric = null;
+            
         }
 
         private void logButton_Click(object sender, EventArgs e)
@@ -46,8 +47,6 @@ namespace Tessup
             {
                 _myLogger.Error(string.Format("Unable to log message \"{0}\" with level \"{1}\"; {2}",logTextBox.Text,level,ex.Message));
             }
-            //myLogger.Info(logTextBox.Text);
-            //logTextBox.Text = System.Reflection.MethodBase.GetCurrentMethod().Name;
         }
 
         private void logLevel_Changed(object sender, EventArgs e)
