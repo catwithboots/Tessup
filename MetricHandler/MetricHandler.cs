@@ -1,119 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using Graphite;
-using LibInfluxDB;
+using System.Threading.Tasks;
+using LibInfluxDB.Net;
+using LibInfluxDB.Net.Models;
 
 namespace Tessup
-{   
-    public class Metric
+{
+    public class MetricHandler //: IMetricHandler
     {
-        public string targetName { get; set; }
-        public string objectName { get; set; }
-        public string valueName { get; set; }
-        public object value { get; set; }
-        public Metric(string targetName, string objectName, string valueName, object value)
-        {
-            this.objectName = objectName;
-            this.targetName = targetName;
-            this.valueName = valueName;
-            this.value = value;
-        }
-    }
-
-    class MetricHandlerEvent
-    {
-        public delegate void WriteMetricEvent(List<Metric> metricList);
-        //Defining event based on the above delegate
-        public static event WriteMetricEvent writeMetricEvent;
-
-        public static void onWriteMetric(List<Metric> s)
-        {
-            if (writeMetricEvent != null)
-            {
-                writeMetricEvent(s);
-            }
-        }
-    }
-
-    public class MetricHandler : IMetricHandler
-    {
-        public bool useLog { get; set; }
-        public bool useInfluxDb { get; set; }
-        public bool useGraphite { get; set; }
-        public MetricHandler()
+        public bool UseLog { get; set; }
+        public bool UseInfluxDb { get; set; }
+        public bool UseGraphite { get; set; }
+        public void metricHandler()
         {
             //foreach known and configured method add a handler
-            MetricHandlerEvent.writeMetricEvent += (e) => WriteLog(e);
+            MetricHandlerEvent.MetricEvent += WriteLog;
         }
         public MetricHandler(bool useLog,bool useInfluxDb,bool useGraphite)
         {
-            this.useInfluxDb = useInfluxDb;
-            this.useGraphite = useGraphite;
-            this.useLog = useLog;
+            UseInfluxDb = useInfluxDb;
+            UseGraphite = useGraphite;
+            UseLog = useLog;
             
             
             //foreach known and configured method add a handler
             if (useLog)
             {
-                MetricHandlerEvent.writeMetricEvent += (e) => WriteLog(e);
+                MetricHandlerEvent.MetricEvent += WriteLog;
             }
             if (useInfluxDb)
             {
-                MetricHandlerEvent.writeMetricEvent += (e) => WriteInfluxDb(e);
+                MetricHandlerEvent.MetricEvent += WriteInfluxDb;
             }
             if (useGraphite)
             {
-                MetricHandlerEvent.writeMetricEvent += (e) => WriteGraphite(e);
+                MetricHandlerEvent.MetricEvent += WriteGraphite;
             }
         }
 
         public void WriteMetric(List<Metric> metricList)
         {
-            MetricHandlerEvent.onWriteMetric(metricList);
+            MetricHandlerEvent.OnWriteMetric(metricList);
         }
 
         //Implementations of different writers
-        void WriteLog(List<Metric> metricList)
+        static async Task WriteLog(List<Metric> metricList)
         {
             //kan efficienter door alles naar dezelfde target te sortere/groeperen
-            foreach (Metric m in metricList)
+            foreach (var m in metricList)
             {
-                FileStream fs = new FileStream("c:\\logfiles\\" + m.targetName+ ".txt", FileMode.Append, FileAccess.Write);
-                StreamWriter sw = new StreamWriter(fs);
-                sw.WriteLine("Object Name: {0}, Metric Name: {1}, Metric Value: {2}", m.objectName, m.valueName, m.value.ToString());
+                Stream fs = new FileStream("c:\\logfiles\\" + m.TargetName+ ".txt", FileMode.Append, FileAccess.Write);
+                var sw = new StreamWriter(fs);
+                sw.WriteLine("Object Name: {0}, Metric Name: {1}, Metric Value: {2}", m.ObjectName, m.ValueName, m.Values);
                 sw.Close();
                 fs.Close();
+                MetricHandlerEvent.MetricEvent -= WriteLog;
+                return;
             }
         }
         //void WriteInfluxDb(List<Metric> metricList)
-        void WriteInfluxDb(List<Metric> metricList)
+        static async Task WriteInfluxDb(List<Metric> metricList)
         {
             // convert metriclist to lists(s) that is optimal for influxdb
             //foreach influxdbmetric do sent it to influxdb
 
 
-            LibInfluxDB.Net.InfluxDb connect = new LibInfluxDB.Net.InfluxDb("http://influxdb-tessup-1.kmeinster.cont.tutum.io:8086", "tessup", "tessup");
-            foreach (Metric m in metricList)
+            var connect = new InfluxDb("http://influxdb.jollyrogers.nl:8086", "tessup", "tessup");
+            foreach (var m in metricList)
             {
-                LibInfluxDB.Net.Models.Serie payload = new LibInfluxDB.Net.Models.Serie.Builder(m.objectName).Columns(m.valueName).Values(m.value).Build();
-                Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
+                var payload = new Serie.Builder(m.ObjectName).Columns(m.ValueName).Values(m.Values).Build();
+                //Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
+                var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                MetricHandlerEvent.MetricEvent -= WriteInfluxDb;
+                return;
+                //Task<InfluxDbApiResponse> pushMetric = connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+
             }
             
 
         }
-        void WriteGraphite(List<Metric> metricList)
+
+        static async Task WriteGraphite(List<Metric> metricList)
         {
-            foreach (Metric m in metricList)
+            foreach (var m in metricList)
             {
-                FileStream fs = new FileStream("c:\\logfiles\\" + m.targetName + "_graphite.txt", FileMode.Append, FileAccess.Write);
-                StreamWriter sw = new StreamWriter(fs);
-                sw.WriteLine("Object Name: {1}, Metric Name: {2}, Metric Value: {3}", m.objectName, m.valueName, m.value.ToString());
+                Stream fs = new FileStream("c:\\logfiles\\" + m.TargetName + "_graphite.txt", FileMode.Append, FileAccess.Write);
+                TextWriter sw = new StreamWriter(fs);
+                if (m.Values != null)
+                    sw.WriteLine("Object Name: {1}, Metric Name: {2}, Metric Value: {3}", m.ObjectName, m.ValueName, m.Values);
                 sw.Close();
                 fs.Close();
+                MetricHandlerEvent.MetricEvent -= WriteGraphite;
+                return;
             }
         }
 

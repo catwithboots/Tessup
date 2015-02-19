@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="ILogHandler.cs" />
     <Compile Include="LogHandler.cs" />
+    <Compile Include="LogHandlerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
