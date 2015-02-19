@@ -31,14 +31,14 @@ namespace Tessup
             var configuration = GetConfig();
             // Set nlog specifics if enabled
             if (!configuration.LogHandler.Nlog) return;
-            nLog = LogManager.GetCurrentClassLogger();
-            nLogLevels.Add("Trace", nLog.GetType().GetMethod("Trace", new[] { typeof(string) }));
-            nLogLevels.Add("Debug", nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
-            nLogLevels.Add("Info", nLog.GetType().GetMethod("Info", new[] { typeof(string) }));
-            nLogLevels.Add("Warning", nLog.GetType().GetMethod("Warn", new[] { typeof(string) }));
-            nLogLevels.Add("Error", nLog.GetType().GetMethod("Error", new[] { typeof(string) }));
-            nLogLevels.Add("Verbose", nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
-            nLogLevels.Add("Fatal", nLog.GetType().GetMethod("Fatal", new[] { typeof(string) }));
+            _nLog = LogManager.GetCurrentClassLogger();
+            _nLogLevels.Add("Trace", _nLog.GetType().GetMethod("Trace", new[] { typeof(string) }));
+            _nLogLevels.Add("Debug", _nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            _nLogLevels.Add("Info", _nLog.GetType().GetMethod("Info", new[] { typeof(string) }));
+            _nLogLevels.Add("Warning", _nLog.GetType().GetMethod("Warn", new[] { typeof(string) }));
+            _nLogLevels.Add("Error", _nLog.GetType().GetMethod("Error", new[] { typeof(string) }));
+            _nLogLevels.Add("Verbose", _nLog.GetType().GetMethod("Debug", new[] { typeof(string) }));
+            _nLogLevels.Add("Fatal", _nLog.GetType().GetMethod("Fatal", new[] { typeof(string) }));
             LogHandlerEvent.logEvent += (l, e) => NLogDo(l, e);
         }
         // Method Implementation of interface
@@ -116,21 +116,6 @@ namespace Tessup
             if (_nLogLevels.TryGetValue(l, out method))
             {
                 method.Invoke(_nLog, new Object[] { s });
-            }
-        }
-    }
-
-    class LogHandlerEvent
-    {
-        public delegate void LogEventDelegate(string logLevel,string line);
-        //Defining event based on the above delegate
-        public static event LogEventDelegate LogEvent;
-
-        public static void OnLog(string l,string s)
-        {
-            if (LogEvent != null)
-            {
-                LogEvent(l,s);
             }
         }
     }
