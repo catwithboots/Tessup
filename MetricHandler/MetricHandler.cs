@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using LibInfluxDB.Net;
@@ -8,12 +9,13 @@ namespace Tessup
 {
     public class MetricHandler //: IMetricHandler
     {
+       public static readonly LogHandler _myLogger = new LogHandler();
+        
         public MetricHandler(bool useLog, bool useInfluxDb, bool useGraphite)
         {
             UseInfluxDb = useInfluxDb;
             UseGraphite = useGraphite;
             UseLog = useLog;
-
 
             //foreach known and configured method add a handler
             if (useLog)
@@ -69,15 +71,24 @@ namespace Tessup
             //foreach influxdbmetric do sent it to influxdb
 
 
-            var connect = new InfluxDb("http://influxdb.jollyrogers.nl:8086", "tessup", "tessup");
+            var connect = new InfluxDb(@"http://influxdb.jollyrogers.nl:8086", "tessup", "tessup");
             foreach (var m in metricList)
             {
                 var payload = new Serie.Builder(m.ObjectName).Columns(m.ValueName).Values(m.Values).Build();
                 //Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
-                var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                try
+                {
+                    var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                }
+                catch (Exception ex)
+                {
+
+                    _myLogger.Warning(string.Format("Sending metric failed: " + ex.InnerException.Message));
+                }
+                //var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
                 MetricHandlerEvent.MetricEvent -= WriteInfluxDb;
-                return;
                 //Task<InfluxDbApiResponse> pushMetric = connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                return;
             }
         }
 
@@ -89,7 +100,7 @@ namespace Tessup
                     FileAccess.Write);
                 TextWriter sw = new StreamWriter(fs);
                 if (m.Values != null)
-                    sw.WriteLine("Object Name: {1}, Metric Name: {2}, Metric Value: {3}", m.ObjectName, m.ValueName,
+                    sw.WriteLine("Object Name: {0}, Metric Name: {1}, Metric Value: {2}", m.ObjectName, m.ValueName,
                         m.Values);
                 sw.Close();
                 fs.Close();
