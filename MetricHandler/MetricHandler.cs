@@ -7,11 +7,11 @@ using LibInfluxDB.Net.Models;
 
 namespace Tessup
 {
-    public class MetricHandler //: IMetricHandler
+    public class Metrics //: IMetricHandler
     {
-       public static readonly LogHandler _myLogger = new LogHandler();
+       public static readonly LogHandler MyLogger = new LogHandler();
         
-        public MetricHandler(bool useLog, bool useInfluxDb, bool useGraphite)
+        public Metrics(bool useLog, bool useInfluxDb, bool useGraphite)
         {
             UseInfluxDb = useInfluxDb;
             UseGraphite = useGraphite;
@@ -36,7 +36,7 @@ namespace Tessup
         public bool UseInfluxDb { get; set; }
         public bool UseGraphite { get; set; }
 
-        public void metricHandler()
+        public void Handler()
         {
             //foreach known and configured method add a handler
             MetricHandlerEvent.MetricEvent += WriteLog;
@@ -64,7 +64,6 @@ namespace Tessup
             }
         }
 
-        //void WriteInfluxDb(List<Metric> metricList)
         private static async Task WriteInfluxDb(List<Metric> metricList)
         {
             // convert metriclist to lists(s) that is optimal for influxdb
@@ -75,19 +74,16 @@ namespace Tessup
             foreach (var m in metricList)
             {
                 var payload = new Serie.Builder(m.ObjectName).Columns(m.ValueName).Values(m.Values).Build();
-                //Task<LibInfluxDB.Net.InfluxDbApiResponse> pushMetric = connect.WriteAsync("tessup", LibInfluxDB.Net.TimeUnit.Milliseconds, payload);
                 try
                 {
-                    var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
+                    await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
                 }
                 catch (Exception ex)
                 {
 
-                    _myLogger.Warning(string.Format("Sending metric failed: " + ex.InnerException.Message));
+                    MyLogger.Warning(string.Format("Sending metric to influxdb failed: " + ex.InnerException.Message));
                 }
-                //var pushMetric = await connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
                 MetricHandlerEvent.MetricEvent -= WriteInfluxDb;
-                //Task<InfluxDbApiResponse> pushMetric = connect.WriteAsync(m.TargetName, TimeUnit.Milliseconds, payload);
                 return;
             }
         }

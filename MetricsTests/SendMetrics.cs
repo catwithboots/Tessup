@@ -15,7 +15,7 @@ namespace MetricsTests
             DateTime testTime = DateTime.Now;
             List<Metric> metricList = new List<Metric>();
             metricList.Add(new Metric("tessup", "UnitTest", "WriteToInfluxDB", testTime));
-            MetricHandler myMetric = new MetricHandler(true,true,false);
+            Metrics myMetric = new Metrics(true,true,false);
             myMetric.WriteMetric(metricList);
         }
     }

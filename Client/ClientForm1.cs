@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //using Tessup;
@@ -18,6 +19,7 @@ namespace Tessup
 
         }
 
+        //private void button1_Click(object sender, EventArgs e)
         private void button1_Click(object sender, EventArgs e)
         {
             bool useInfluxDb=false, useGraphite=false, useLogFile=false;
@@ -26,8 +28,7 @@ namespace Tessup
                 if ((string)itemChecked == "Graphite") { useGraphite = true; }
                 if ((string)itemChecked == "LogFile") { useLogFile = true; }
             }
-            var mymetric = new MetricHandler(useLogFile,useInfluxDb,useGraphite);
-            
+            var mymetric = new Metrics(useLogFile,useInfluxDb,useGraphite);
             var mylist= (from DataGridViewRow dr in dataGridView1.Rows where dr.Cells["targetName"].Value != null select new Metric((string) dr.Cells["targetName"].Value, (string) dr.Cells["objectName"].Value, (string) dr.Cells["valueName"].Value, dr.Cells["Value"].Value)).ToList();
             mymetric.WriteMetric(mylist);
             mymetric = null;    
